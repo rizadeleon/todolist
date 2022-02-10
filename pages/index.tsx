@@ -9,9 +9,8 @@ export interface Todolisst {
 const listArray = { List: [{ id: 0, title: "Task 1", status: "unfinished" }] };
 
 export default function Home() {
-  const idCount = listArray.List.length;
   const [todoInfo, setTodoInfo] = useState<Todolisst>({
-    id: idCount,
+    id: listArray.List.length,
     title: "",
     status: "unfinished",
   });
@@ -38,7 +37,6 @@ export default function Home() {
         >
           <Typography
             fontFamily="sans-serif"
-            mt={3}
             fontWeight="bold"
             fontSize={30}
             textAlign="center"
@@ -67,11 +65,10 @@ export default function Home() {
             onClick={() => {
               listArray.List.push(todoInfo);
               setTodoInfo({
-                id: idCount,
+                id: listArray.List.length,
                 title: "",
                 status: "unfinished",
               });
-              console.log(listArray.List);
             }}
           >
             Submit
@@ -91,7 +88,6 @@ export default function Home() {
         >
           <Typography
             fontFamily="sans-serif"
-            mt={3}
             fontWeight="bold"
             fontSize={30}
             textAlign="center"
@@ -102,21 +98,18 @@ export default function Home() {
           {listArray.List.map((data, index) => (
             <div key={index}>
               {data.status === "unfinished" && (
-                <Typography
-                  color={data.status === "unfinished" ? "success" : "error"}
-                >
+                <Typography>
                   {data.title}
 
                   <Checkbox
-                    checked={data.status === "unfinished" ? false : undefined}
+                    checked={data.status === "unfinished" ? false : true}
                     onChange={() => {
                       listArray.List[data.id].status = "finished";
                       setTodoInfo({
-                        id: idCount,
+                        id: listArray.List.length,
                         title: "",
                         status: "unfinished",
                       });
-                      console.log(data);
                     }}
                   />
                 </Typography>
@@ -138,7 +131,6 @@ export default function Home() {
         >
           <Typography
             fontFamily="sans-serif"
-            mt={3}
             fontWeight="bold"
             fontSize={30}
             textAlign="center"
@@ -148,16 +140,14 @@ export default function Home() {
           {listArray.List.map((data, index) => (
             <div key={index}>
               {data.status === "finished" && (
-                <Typography
-                  color={data.status === "finished" ? "error" : "success"}
-                >
+                <Typography style={{ textDecoration: "line-through" }}>
                   {data.title}
                   <Checkbox
                     checked={data.status === "finished" ? true : false}
                     onChange={() => {
                       listArray.List[data.id].status = "unfinished";
                       setTodoInfo({
-                        id: idCount,
+                        id: listArray.List.length,
                         title: "",
                         status: "unfinished",
                       });
